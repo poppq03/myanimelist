@@ -6,7 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice // 모든 컨트롤러에서 발생하는 예외를 여기서 한 번에 처리해줌
+@RestControllerAdvice // 모든 컨트롤러에서 발생하는 예외를 여기서 한 번에 처리함
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(AnimeNotFoundException.class)
