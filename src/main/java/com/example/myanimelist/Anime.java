@@ -1,6 +1,7 @@
 package com.example.myanimelist;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity //이 클래스는 DB 테이블이라고 알려주는 용도
 public class Anime {
@@ -8,12 +9,23 @@ public class Anime {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //id를 자동으로 1,2,3 순서대로 생성
     private Long id;
 
+    @NotBlank(message = "제목은 필수입니다.")
     private String title;
+
     private String genre;
+
+    @Min(value = 0, message = "전체 화수는 0 이상이어야 합니다.")
     private int totalEpisodes;
+
+    @Min(value = 0, message = "시청 화수는 0 이상이어야 합니다.")
     private int watchedEpisodes;
+
     private String status; // 시청중 / 완료 / 보류
+
+    @Min(value = 0, message = "평점은 0 이상이어야 합니다.")
+    @Max(value = 5, message = "평점은 5 이하여야 합니다.")
     private double rating;
+
     private String review;
 
     // Getters and Setters

@@ -1,8 +1,8 @@
 package com.example.myanimelist;
 
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 import java.util.List;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController //컨트롤러 정의, 응답할 때 자동으로 JSON 형태로 변환
 @RequestMapping("/animes")
@@ -33,7 +33,7 @@ public class AnimeController {
 
     // 추가
     @PostMapping
-    public Anime create(@RequestBody Anime anime) {
+    public Anime create(@Valid @RequestBody Anime anime) {
         return animeRepository.save(anime);
     }
 
