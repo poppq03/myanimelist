@@ -2,6 +2,7 @@ package com.example.myanimelist;
 
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController //컨트롤러 정의, 응답할 때 자동으로 JSON 형태로 변환
 @RequestMapping("/animes")
@@ -16,7 +17,10 @@ public class AnimeController {
 
     // 전체 조회
     @GetMapping
-    public List<Anime> getAll() {
+    public List<Anime> getAll(@RequestParam(required = false) String status) {
+        if (status != null) {
+            return animeRepository.findByStatus(status);
+        }
         return animeRepository.findAll();
     }
 
