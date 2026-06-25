@@ -10,9 +10,17 @@ import java.util.List;
 public class AnimeController {
 
     private final AnimeRepository animeRepository;
+    private final AnimeService animeService;
 
-    public AnimeController(AnimeRepository animeRepository) {
+    public AnimeController(AnimeRepository animeRepository, AnimeService animeService) {
         this.animeRepository = animeRepository;
+        this.animeService = animeService;
+    }
+
+    //통계 조회 (* /{id}보다 위에 있어야 한다)
+    @GetMapping("/stats")
+    public AnimeStats getStats() {
+        return animeService.getStats();
     }
 
     // 전체 조회
