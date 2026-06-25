@@ -34,6 +34,9 @@ public class AnimeController {
     // 추가
     @PostMapping
     public Anime create(@Valid @RequestBody Anime anime) {
+        if (animeRepository.existsByTitle(anime.getTitle())) {
+            throw new DuplicateAnimeException(anime.getTitle());
+        }
         return animeRepository.save(anime);
     }
 
