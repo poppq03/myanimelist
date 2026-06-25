@@ -1,10 +1,13 @@
 package com.example.myanimelist;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AnimeRepository extends JpaRepository<Anime, Long> {
     List<Anime> findByStatus(String status);
+    Page<Anime> findByStatus(String status, Pageable pageable);
     boolean existsByTitle(String title);
 } //JpaRepository 상속 받는 인터페이스
 //JpaRepository 상속 받으면 DB 기능 사용 가능

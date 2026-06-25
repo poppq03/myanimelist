@@ -3,6 +3,9 @@ package com.example.myanimelist;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @RestController //컨트롤러 정의, 응답할 때 자동으로 JSON 형태로 변환
 @RequestMapping("/animes")
@@ -25,11 +28,17 @@ public class AnimeController {
 
     // 전체 조회
     @GetMapping
-    public List<Anime> getAll(@RequestParam(required = false) String status) {
+    public Page<Anime> getAll(
+            @RequestParam(required = false) String status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+
         if (status != null) {
-            return animeRepository.findByStatus(status);
+            return animeRepository.findByStatus(status, pageable);
         }
-        return animeRepository.findAll();
+        return animeRepository.findAll(pageable);
     }
 
     // 단건 조회
