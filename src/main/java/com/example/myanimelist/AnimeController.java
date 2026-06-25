@@ -1,5 +1,6 @@
 package com.example.myanimelist;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -26,14 +27,20 @@ public class AnimeController {
         return animeService.getStats();
     }
 
-    // 전체 조회
+    // 전체 조회 (status 필터 + 페이징 + 정렬 가능)
     @GetMapping
     public Page<Anime> getAll(
             @RequestParam(required = false) String status,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction
     ) {
-        Pageable pageable = PageRequest.of(page, size);
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
 
         if (status != null) {
             return animeRepository.findByStatus(status, pageable);
