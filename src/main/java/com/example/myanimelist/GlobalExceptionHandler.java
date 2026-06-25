@@ -19,4 +19,9 @@ public class GlobalExceptionHandler {
         String message = e.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
+
+    @ExceptionHandler(DuplicateAnimeException.class)
+    public ResponseEntity<String> handleDuplicate(DuplicateAnimeException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
 }
